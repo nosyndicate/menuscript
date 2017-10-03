@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<div class='container'>
+    <form method='POST' class="form-group" action=".">
+        {% csrf_token %}
+        <select>
+            <option>Ermo</option>
+            <option>Haoliang</option>
+            <option>Shu</option>
+            <option>Xiaozhu</option>
+        </select>
+        {{ form }}
+        <input type='submit' value="就吃这些" class="btn btn-primary">
+    </form>
+</div>
+{% endblock %}
