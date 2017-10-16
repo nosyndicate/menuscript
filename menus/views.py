@@ -9,8 +9,11 @@ from django.conf import settings
 from .models import Greeting
 from .forms import DishForm
 
+from django.views.decorators.csrf import csrf_exempt
+
 logger = logging.getLogger('default')
 
+@csrf_exempt
 def index(request):
     if request.method == 'POST':
         form = DishForm(request.POST, dishes=load_menu())
@@ -19,7 +22,17 @@ def index(request):
     else: 
         form = DishForm(dishes=load_menu())
 
-    return render_to_response('index.html', {'form': form})            
+    person_list = [
+        ("who-Ermo", "Ermo"),
+        ("who-Haoliang", "Haoliang"),
+        ("who-Shu", "Shu"),
+        ("who-Xiaozhu", "Xiaozhu"),
+    ]
+
+    dishes = load_menu()
+    dish_list = reduce(lambda x, y: x + y, [d.items() for d in dishes.values()], [])
+
+    return render_to_response('index.html', {'person_list': person_list, "dish_list": dish_list})            
 
 
 def load_menu():
